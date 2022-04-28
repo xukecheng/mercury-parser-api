@@ -25,3 +25,16 @@ jobs:
                   --platform=linux/amd64,linux/arm/v7,linux/arm64 \
                   --output "type=image,push=false" \
                   --file ./Dockerfile .
+    automerge:
+        needs: build
+        runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
+            contents: write
+        steps:
+            - uses: fastify/github-action-merge-dependabot@v3
+              if: >-
+                  ${{ github.actor == 'dependabot[bot]' && github.event_name ==
+                  'pull_request' }}
+                  with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
