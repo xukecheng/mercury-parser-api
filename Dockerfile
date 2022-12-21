@@ -2,8 +2,6 @@ FROM node:13-alpine
 
 ARG NODE_ENV=production
 
-ENV BROWSERLESS_URL
-
 WORKDIR /app
 
 COPY package*.json ./
