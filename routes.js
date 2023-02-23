@@ -19,10 +19,12 @@ router.route('/parser').get(async (req, res) => {
       let browser;
 
       if (config.browserless_url !== null && req.query.browserless) {
+        console.log('Server in browserless');
         browser = await puppeteer.connect({
           browserWSEndpoint: config.browserless_url,
         });
       } else {
+        console.log('Server in no browserless');
         browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'], });
       }
 
