@@ -18,7 +18,7 @@ router.route('/parser').get(async (req, res) => {
     try {
       let browser;
 
-      if (config.browserless_url !== null) {
+      if (config.browserless_url !== null && req.query.browserless) {
         browser = await puppeteer.connect({
           browserWSEndpoint: config.browserless_url,
         });
