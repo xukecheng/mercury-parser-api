@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN apk add --no-cache --virtual build-pack git \
-    && npm install \
+    && yarn \
     && apk del build-pack \
     && apk add --no-cache dumb-init
 
