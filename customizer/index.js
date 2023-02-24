@@ -1,4 +1,4 @@
-function customize(parser) {
+function customize (parser) {
     // Customize the parser here.
 }
 
