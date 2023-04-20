@@ -3,11 +3,11 @@ name: CI for tests
 on:
     pull_request:
         branches:
-            - "master"
+            - 'master'
     push:
         branches:
-            - "*"
-            - "!master"
+            - '*'
+            - '!master'
 
 jobs:
     build:
@@ -22,7 +22,7 @@ jobs:
             - name: Build dockerfile (without push)
               run: |
                   docker buildx build \
-                  --platform=linux/amd64,linux/arm/v7,linux/arm64 \
+                  --platform=linux/amd64 \
                   --output "type=image,push=false" \
                   --file ./Dockerfile .
     automerge:
