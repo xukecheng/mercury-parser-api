@@ -45,14 +45,14 @@ router.route('/parser').get(async (req, res) => {
                     config.COOKIE_CLOUD_PASSWORD !== null &&
                     req.query.cloud_cookie
                 ) {
+                    console.log('add cookies');
                     const cookies = await cloud_cookie(
                         config.COOKIE_CLOUD_HOST,
                         config.COOKIE_CLOUD_UUID,
                         config.COOKIE_CLOUD_PASSWORD,
                         req.query.url
                     );
-                    console.log(cookies);
-                    console.log('add cookies');
+
                     await page.setCookie(...cookies);
                 }
                 await page.goto(req.query.url, {
