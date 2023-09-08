@@ -1,6 +1,9 @@
-> 我的 repo 主要是增加对 browserless 的支持，
-> 
+> 我的 repo 主要是增加对 browserless 和 cookie cloud 的支持，
+>
 > BROWSERLESS_URL='ws://x.x.x.x:xxxx/?token=xxxxxxxx'
+> COOKIE_CLOUD_HOST=
+> COOKIE_CLOUD_UUID=
+> COOKIE_CLOUD_PASSWORD=
 
 # Mercury Parser API
 
@@ -74,25 +77,25 @@ In the above example, the `my-customizer-dir` directory will contain `index.js`,
 
 ```js
 const NaverMobileBlogExtractor = {
-  domain: 'm.blog.naver.com',
-  title: {
-    selectors: ['.se-title-text'],
-  },
-  author: {
-    selectors: ['.blog_author'],
-  },
-  content: {
-    selectors: ['.se-main-container'],
-  }, 
-  date_published: {
-    selectors: ['.blog_date'],
-    format: 'YYYY. MM. DD. HH:mm',
-    timezone: 'Asia/Seoul',
-  },
+    domain: 'm.blog.naver.com',
+    title: {
+        selectors: ['.se-title-text'],
+    },
+    author: {
+        selectors: ['.blog_author'],
+    },
+    content: {
+        selectors: ['.se-main-container'],
+    },
+    date_published: {
+        selectors: ['.blog_date'],
+        format: 'YYYY. MM. DD. HH:mm',
+        timezone: 'Asia/Seoul',
+    },
 };
 
 function customize(parser) {
-  parser.addExtractor(NaverMobileBlogExtractor);
+    parser.addExtractor(NaverMobileBlogExtractor);
 }
 
 module.exports = { customize };
@@ -104,9 +107,9 @@ console.log('📜My custom extractor is loaded.');
 
 Licensed under either of the below, at your preference:
 
-- Apache License, Version 2.0
-  ([LICENSE-APACHE](http://www.apache.org/licenses/LICENSE-2.0))
-- MIT license
-  ([LICENSE-MIT](http://opensource.org/licenses/MIT))
+-   Apache License, Version 2.0
+    ([LICENSE-APACHE](http://www.apache.org/licenses/LICENSE-2.0))
+-   MIT license
+    ([LICENSE-MIT](http://opensource.org/licenses/MIT))
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FHenryQW%2Fmercury-parser-api.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FHenryQW%2Fmercury-parser-api?ref=badge_large)

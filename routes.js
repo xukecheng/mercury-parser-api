@@ -4,6 +4,7 @@ const Parser = require('@postlight/parser');
 const puppeteer = require('puppeteer');
 const config = require('./config');
 const ParserCustomizer = require('./customizer');
+const { cloud_cookie } = require('./tools');
 
 ParserCustomizer.customize(Parser);
 
@@ -38,6 +39,22 @@ router.route('/parser').get(async (req, res) => {
                 await page.setUserAgent(
                     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36 Edg/81.0.416.64'
                 );
+
+                if (
+                    config.COOKIE_CLOUD_HOST !== null &&
+                    config.COOKIE_CLOUD_UUID !== null &&
+                    config.COOKIE_CLOUD_PASSWORD !== null &&
+                    req.query.cloud_cookie
+                ) {
+                    const cookies = await cloud_cookie(
+                        config.COOKIE_CLOUD_HOST,
+                        config.COOKIE_CLOUD_UUID,
+                        config.COOKIE_CLOUD_PASSWORD.replace,
+                        req.query.url
+                    );
+                    console.log('add cookies');
+                    await page.setCookie(...cookies);
+                }
                 await page.goto(req.query.url, {
                     timeout: req.query.timeout || '10000',
                     waitUntil: 'networkidle2',
