@@ -28,11 +28,10 @@ router.route('/parser').get(async (req, res) => {
             if (typeof req.query.headers !== 'undefined') {
                 headers = JSON.parse(req.query.headers);
             }
-
-            if (config.browserless_url !== null && req.query.browserless) {
+            if (config.BROWSERLESS_HOST !== null && config.BROWSERLESS_TOKEN !== null && req.query.browserless) {
                 console.log('Server in browserless');
                 browser = await puppeteer.connect({
-                    browserWSEndpoint: config.browserless_url,
+                    browserWSEndpoint: `ws://${config.BROWSERLESS_HOST}/?token=${config.BROWSERLESS_TOKEN}`,
                 });
                 // Fetch the HTML of the URL using Puppeteer
                 const page = await browser.newPage();
@@ -49,9 +48,10 @@ router.route('/parser').get(async (req, res) => {
                     const cookies = await cloud_cookie(
                         config.COOKIE_CLOUD_HOST,
                         config.COOKIE_CLOUD_UUID,
-                        config.COOKIE_CLOUD_PASSWORD.replace,
+                        config.COOKIE_CLOUD_PASSWORD,
                         req.query.url
                     );
+                    console.log(cookies);
                     console.log('add cookies');
                     await page.setCookie(...cookies);
                 }
