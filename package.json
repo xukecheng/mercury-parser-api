@@ -21,6 +21,8 @@
     "dependencies": {
         "@postlight/parser": "^2.2.3",
         "body-parser": "1.20.2",
+        "cross-fetch": "^4.0.0",
+        "crypto-js": "^4.1.1",
         "express": "4.18.2",
         "helmet": "6.1.5",
         "morgan": "1.10.0",
