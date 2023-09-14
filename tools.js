@@ -3,6 +3,9 @@ const CryptoJS = require('crypto-js');
 
 async function cloud_cookie(host, uuid, password, link) {
     const content_url = new URL(link);
+    const hostname = content_url.hostname;
+    const domainParts = hostname.split('.');
+    const mainDomain = domainParts.slice(-2).join('.');
     const url = host + '/get/' + uuid;
     const ret = await fetch(url);
     const json = await ret.json();
@@ -10,7 +13,7 @@ async function cloud_cookie(host, uuid, password, link) {
     if (json && json.encrypted) {
         const { cookie_data } = cookie_decrypt(uuid, json.encrypted, password);
         for (const key in cookie_data) {
-            if (key === content_url.hostname) {
+            if (key === mainDomain) {
                 // merge cookie_data[key] to cookies
                 cookies = cookies.concat(
                     cookie_data[key].map((item) => {
