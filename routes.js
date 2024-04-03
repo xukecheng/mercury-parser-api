@@ -31,4 +31,19 @@ router.route('/parser').get(async (req, res) => {
     return res.json(result);
 });
 
+router.route('/parse-html').post(async (req, res) => {
+    let result = { message: 'No URL was provided' };
+
+    if (req.body.url && req.body.html) {
+        try {
+            result = await Mercury.parse(req.body.url, {
+              html: req.body.html
+            });
+        } catch (error) {
+            result = { error: true, messages: error.message };
+        }
+    }
+    return res.json(result);
+});
+
 module.exports = router;
