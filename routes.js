@@ -83,4 +83,18 @@ router.route('/parser').get(async (req, res) => {
     return res.json(result);
 });
 
+router.route('/parse-html').post(async (req, res) => {
+    let result = { message: 'Invalid request body, both url and html are required' };
+    if (req.body.url && req.body.html) {
+        try {
+            result = await Parser.parse(req.body.url, {
+                html: req.body.html
+            });
+        } catch (error) {
+            result = { error: true, messages: error.message };
+        }
+    }
+    return res.json(result);
+});
+
 module.exports = router;
