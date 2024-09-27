@@ -5,6 +5,7 @@ const puppeteer = require('puppeteer');
 const config = require('./config');
 const ParserCustomizer = require('./customizer');
 const { cloud_cookie } = require('./tools');
+const he = require('he'); // 引入 he 库
 
 ParserCustomizer.customize(Parser);
 
@@ -45,7 +46,6 @@ router.route('/parser').get(async (req, res) => {
                     config.COOKIE_CLOUD_PASSWORD !== null &&
                     req.query.cloud_cookie
                 ) {
-                    console.log('add cookies');
                     const cookies = await cloud_cookie(
                         config.COOKIE_CLOUD_HOST,
                         config.COOKIE_CLOUD_UUID,
@@ -53,7 +53,12 @@ router.route('/parser').get(async (req, res) => {
                         req.query.url
                     );
 
-                    await page.setCookie(...cookies);
+                    if (cookies.length > 0) {
+                        console.log('add cookies');
+                        await page.setCookie(...cookies);
+                    } else {
+                        console.log('no cookies');
+                    }
                 }
                 await page.goto(req.query.url, {
                     timeout: req.query.timeout || '10000',
@@ -76,6 +81,9 @@ router.route('/parser').get(async (req, res) => {
 
             // Pass the HTML to the Mercury.parse function
             result = await Parser.parse(req.query.url, parserBody);
+
+            // 解码 HTML 实体
+            result.content = he.decode(result.content);
         } catch (error) {
             result = { error: true, messages: error.message };
         }
@@ -88,7 +96,7 @@ router.route('/parse-html').post(async (req, res) => {
     if (req.body.url && req.body.html) {
         try {
             result = await Parser.parse(req.body.url, {
-                html: req.body.html
+                html: req.body.html,
             });
         } catch (error) {
             result = { error: true, messages: error.message };

@@ -20,6 +20,9 @@ dependencies:
   express:
     specifier: 4.19.2
     version: 4.19.2
+  he:
+    specifier: ^1.2.0
+    version: 1.2.0
   helmet:
     specifier: 7.1.0
     version: 7.1.0
@@ -1165,6 +1168,11 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       function-bind: 1.1.2
+    dev: false
+
+  /he@1.2.0:
+    resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
+    hasBin: true
     dev: false
 
   /heap@0.2.7:

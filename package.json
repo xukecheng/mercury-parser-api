@@ -24,6 +24,7 @@
         "cross-fetch": "^4.0.0",
         "crypto-js": "^4.1.1",
         "express": "4.19.2",
+        "he": "^1.2.0",
         "helmet": "7.1.0",
         "morgan": "1.10.0",
         "puppeteer": "18.1.0"
